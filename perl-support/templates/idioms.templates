@@ -1,0 +1,66 @@
+== Idioms.scalar == map:id, sc:s, insert ==
+my	$<CURSOR>;
+== Idioms.scalar+assignment == map:ida, sc:s, insert ==
+my	$<CURSOR>	= <+val+>;
+== Idioms.scalar_list == map:idd, sc:s, insert ==
+my	( $<CURSOR>, $<+name+> );
+== Idioms.array == map:ia, sc:a, insert ==
+my	@<CURSOR>;
+== Idioms.array+assignment == map:iaa, sc:a, insert ==
+my	@<CURSOR>	= ( <+val+>, <+val+>, );
+== Idioms.hash == map:ih, sc:h ==
+my	%<CURSOR>;
+== Idioms.hash+assignment == map:ihh, sc:h, insert ==
+my	%<CURSOR>	= (
+	<+key1+> => <+val1+>,
+	<+key2+> => <+val2+>,
+	);
+== Idioms.regex == map:ir, sc:r, insert ==
+my	$rgx_<CURSOR>	= qr/<+regexp+>/;
+== Idioms.match == map:im, sc:m, insert ==
+$<CURSOR> =~ m/<+regexp+>/xm
+== Idioms.substitute == map:is, sc:s, insert ==
+$<CURSOR> =~ s/<+pattern+>/<+replacement+>/xm
+== Idioms.translate == map:it, sc:t, insert ==
+$<CURSOR> =~ tr/<+searchlist+>/<+replacementlist+>/
+== Idioms.subroutine == map:isu, sc:s ==
+sub |?FUNCTION_NAME| {
+	my	( $par1<CURSOR> )	= @_;
+<SPLIT>	return ;
+} ## --- end sub |FUNCTION_NAME|
+== Idioms.print == map:ip, sc:p, insert ==
+print "<CURSOR>\n";
+== Idioms.open input file == map:ii, sc:i ==
+my	$|?FILEPOINTER|_in = "<CURSOR>";
+open  my $|FILEPOINTER|, '<', $|FILEPOINTER|_in or die "Fail open $|FILEPOINTER|_in file\n";
+while(my $line=<$|FILEPOINTER|>)
+{
+		chomp $line;
+}
+close  $|FILEPOINTER|;
+
+== Idioms.open output file == map:io, sc:o ==
+my	$|?FILEPOINTER|_out = "<CURSOR>";
+open  my $|FILEPOINTER|, '>', $|FILEPOINTER|_out or die  "Fail open $|FILEPOINTER|_out\n";
+close  $|FILEPOINTER|;
+
+== Idioms.open pipe == map:ipi, sc:p ==
+my	$|?PIPE|_command = " |<CURSOR> ";
+open  my $|PIPE|, $|PIPE|_command
+or die  "$0 : failed to open  pipe '$|PIPE|_command' : $!\n";
+<SPLIT>{-continue_here-}
+close  $|PIPE|
+or warn "$0 : failed to close pipe '$|PIPE|_command' : $!\n";
+
+== Idioms.STDIN == sc:i, insert ==
+<STDIN><CURSOR>
+== Idioms.STDOUT == sc:o, insert ==
+<STDOUT><CURSOR>
+== Idioms.STDERR == sc:e, insert ==
+<STDERR><CURSOR>
+
+
+== Idioms.begin == map:ib, sc:b, insert ==
+use strict;
+use warnings;
+use 5.16.3;
